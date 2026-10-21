@@ -15,25 +15,23 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public List<Customer> getCustomers() {
-		// TODO Auto-generated method stub
-		return null;
+		return customerDAO.getCustomers();
 	}
 
 	@Override
 	public void saveCustomer(Customer customer) {
-		// TODO Auto-generated method stub
+		customerDAO.saveCustomer(customer);
 		
 	}
 
 	@Override
 	public Customer getCustomer(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return customerDAO.getCustomer(id);
 	}
 
 	@Override
 	public void deleteCustomer(int id) {
-		// TODO Auto-generated method stub
+		customerDAO.deleteCustomer(id);
 		
 	}
 
