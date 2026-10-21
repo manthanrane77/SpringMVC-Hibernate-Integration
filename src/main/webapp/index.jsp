@@ -1,5 +1,3 @@
-<html>
-<body>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -7,5 +5,3 @@
         request.getContextPath() + "/customer/list"
     );
 %>
-</body>
-</html>

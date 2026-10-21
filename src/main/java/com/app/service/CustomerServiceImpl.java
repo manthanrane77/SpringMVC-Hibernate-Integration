@@ -2,37 +2,42 @@ package com.app.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.app.dao.CustomerDAO;
 import com.app.entity.Customer;
 
-public class CustomerServiceImpl implements CustomerService{
-	private final CustomerDAO customerDAO;
-	
-	public CustomerServiceImpl(CustomerDAO customerDAO) {
-		this.customerDAO=customerDAO;
-	};
-	
+@Service
+public class CustomerServiceImpl implements CustomerService {
 
-	@Override
-	public List<Customer> getCustomers() {
-		return customerDAO.getCustomers();
-	}
+    private final CustomerDAO customerDAO;
 
-	@Override
-	public void saveCustomer(Customer customer) {
-		customerDAO.saveCustomer(customer);
-		
-	}
+    public CustomerServiceImpl(CustomerDAO customerDAO) {
+        this.customerDAO = customerDAO;
+    }
 
-	@Override
-	public Customer getCustomer(int id) {
-		return customerDAO.getCustomer(id);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Customer> getCustomers() {
+        return customerDAO.getCustomers();
+    }
 
-	@Override
-	public void deleteCustomer(int id) {
-		customerDAO.deleteCustomer(id);
-		
-	}
+    @Override
+    @Transactional
+    public void saveCustomer(Customer customer) {
+        customerDAO.saveCustomer(customer);
+    }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Customer getCustomer(int customerId) {
+        return customerDAO.getCustomer(customerId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCustomer(int customerId) {
+        customerDAO.deleteCustomer(customerId);
+    }
 }

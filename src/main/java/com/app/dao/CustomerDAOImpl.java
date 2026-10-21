@@ -4,47 +4,50 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 
 import com.app.entity.Customer;
 
+@Repository
+public class CustomerDAOImpl implements CustomerDAO {
 
-public class CustomerDAOImpl implements CustomerDAO{
-	private final SessionFactory sessionFactory;
-	
-	public CustomerDAOImpl(SessionFactory sessionFactory) {
-		this.sessionFactory=sessionFactory;
-	}
+    private final SessionFactory sessionFactory;
 
-	@Override
-	public List<Customer> getCustomers() {
-		Session session=sessionFactory.getCurrentSession();
-		
-		return session.createQuery("from customer orderby lastName",Customer.class).getResultList();
-	}
+    public CustomerDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
-	@Override
-	public void saveCustomer(Customer customer) {
-		Session session=sessionFactory.getCurrentSession();
-		session.merge(customer);
-		
-	}
+    @Override
+    public List<Customer> getCustomers() {
+        Session session = sessionFactory.getCurrentSession();
 
-	@Override
-	public Customer getCustomer(int id) {
-		Session session=sessionFactory.getCurrentSession();
-		return session.get(Customer.class, id);
-		
-	}
+        return session.createQuery(
+                "FROM Customer ORDER BY lastName, firstName",
+                Customer.class
+        ).getResultList();
+    }
 
-	@Override
-	public void deleteCustomer(int id) {
-		Session session=sessionFactory.getCurrentSession();
-		Customer customer=session.get(Customer.class, id);
-		if(customer != null) {
-			session.remove(customer);
-		}
-		
-		
-	}
+    @Override
+    public void saveCustomer(Customer customer) {
+        Session session = sessionFactory.getCurrentSession();
+        session.merge(customer);
+    }
 
+    @Override
+    public Customer getCustomer(int customerId) {
+        Session session = sessionFactory.getCurrentSession();
+
+        return session.get(Customer.class, customerId);
+    }
+
+    @Override
+    public void deleteCustomer(int customerId) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Customer customer = session.get(Customer.class, customerId);
+
+        if (customer != null) {
+            session.remove(customer);
+        }
+    }
 }
